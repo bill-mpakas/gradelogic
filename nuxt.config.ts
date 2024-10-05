@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2024-07-03',
-  rootDir: 'nuxt/',
+  compatibilityDate: "2024-07-03",
+  rootDir: "nuxt/",
 
   future: {
     compatibilityVersion: 4,
@@ -26,61 +26,70 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Home',
-      titleTemplate: '%s | LaravelNuxt Boilerplate',
+      title: "Home",
+      titleTemplate: "%s | LaravelNuxt Boilerplate",
       meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { charset: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
       ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      ],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
     },
   },
 
   routeRules: {
-    'auth/verify': { ssr: false }
+    "auth/verify": { ssr: false },
   },
 
   tailwindcss: {
-    cssPath: '@/assets/css/main.css',
+    cssPath: "@/assets/css/main.css",
   },
 
   /**
    * @see https://v3.nuxtjs.org/api/configuration/nuxt.config#modules
    */
   modules: [
-    '@nuxt/ui',
-    '@nuxt/image',
-    '@pinia/nuxt',
-    'dayjs-nuxt',
-    'nuxt-security',
+    "@nuxt/ui",
+    "@nuxt/image",
+    "@pinia/nuxt",
+    "dayjs-nuxt",
+    "nuxt-security",
   ],
 
   image: {
-    domains: [
-      import.meta.env.APP_URL || 'http://127.0.0.1:8000'
-    ],
+    domains: [import.meta.env.APP_URL || "http://127.0.0.1:8000"],
     alias: {
-      api: import.meta.env.APP_URL || 'http://127.0.0.1:8000'
-    }
+      api: import.meta.env.APP_URL || "http://127.0.0.1:8000",
+    },
   },
 
   security: {
     headers: {
-      crossOriginEmbedderPolicy: 'unsafe-none',
-      crossOriginOpenerPolicy: 'same-origin-allow-popups',
+      crossOriginEmbedderPolicy: "unsafe-none",
+      crossOriginOpenerPolicy: "same-origin-allow-popups",
       contentSecurityPolicy: {
-        "img-src": ["'self'", "data:", "https://*", import.meta.env.APP_URL || 'http://127.0.0.1:8000'],
+        "img-src": [
+          "'self'",
+          "data:",
+          "https://*",
+          import.meta.env.APP_URL || "http://127.0.0.1:8000",
+        ],
       },
     },
   },
 
   dayjs: {
-    locales: ['en'],
-    plugins: ['relativeTime', 'utc', 'timezone'],
-    defaultLocale: 'en',
+    locales: ["en"],
+    plugins: ["relativeTime", "utc", "timezone"],
+    defaultLocale: "en",
     defaultTimezone: import.meta.env.APP_TIMEZONE,
+  },
+
+  // alias: {
+  //   pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
+  // },
+
+  alias: {
+    pinia: "././node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs",
   },
 
   typescript: {
@@ -94,8 +103,8 @@ export default defineNuxtConfig({
     apiLocal: import.meta.env.API_LOCAL_URL,
     public: {
       apiBase: import.meta.env.APP_URL,
-      apiPrefix: '/api/v1',
-      storageBase: import.meta.env.APP_URL + '/storage/',
+      apiPrefix: "/api/v1",
+      storageBase: import.meta.env.APP_URL + "/storage/",
       providers: {
         google: {
           name: "Google",
@@ -105,4 +114,4 @@ export default defineNuxtConfig({
       },
     },
   },
-})
+});
