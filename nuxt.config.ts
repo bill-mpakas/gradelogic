@@ -7,6 +7,13 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
+  // devServer: {
+  //   https: {
+  //     key: "././localhost-key.pem",
+  //     cert: "././localhost.pem",
+  //   },
+  // },
+
   /**
    * Manually disable nuxt telemetry.
    * @see [Nuxt Telemetry](https://github.com/nuxt/telemetry) for more information.
@@ -63,6 +70,7 @@ export default defineNuxtConfig({
   },
 
   security: {
+    corsHandler: false,
     headers: {
       crossOriginEmbedderPolicy: "unsafe-none",
       crossOriginOpenerPolicy: "same-origin-allow-popups",

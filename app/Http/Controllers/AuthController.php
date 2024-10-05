@@ -226,7 +226,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'token' => ['required'],
-            'email' => ['required', 'email', 'exists:'.User::class],
+            'email' => ['required', 'email', 'exists:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
@@ -287,7 +287,7 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        $user = $request->user()?: User::where('email', $request->email)->whereNull('email_verified_at')->first();
+        $user = $request->user() ?: User::where('email', $request->email)->whereNull('email_verified_at')->first();
 
         abort_if(!$user, 400);
 

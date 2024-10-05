@@ -1,27 +1,27 @@
 {
-  "name": "laravel-nuxt",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "serve": "node nuxt/.output/server/index.mjs",
-    "build": "nuxi cleanup && nuxi build",
-    "cleanup": "nuxi cleanup",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare",
-    "api": "php artisan octane:start --watch"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "^1.5.2",
-    "@nuxt/image": "^1.8.1",
-    "@nuxt/ui": "^2.18.6",
-    "@pinia/nuxt": "^0.5.5",
-    "chokidar": "^4.0.1",
-    "dayjs-nuxt": "^2.1.11",
-    "nuxt": "^3.13.2",
-    "nuxt-security": "2.0.0",
-    "vue": "^3.5.11",
-    "vue-router": "^4.4.5"
-  }
+    "name": "laravel-nuxt",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "serve": "node nuxt/.output/server/index.mjs",
+        "build": "nuxi cleanup && nuxi build",
+        "cleanup": "nuxi cleanup",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "api": "php artisan octane:start --watch"
+    },
+    "devDependencies": {
+        "@nuxt/devtools": "^1.5.2",
+        "@nuxt/image": "^1.8.1",
+        "@nuxt/ui": "^2.18.6",
+        "@pinia/nuxt": "^0.5.5",
+        "chokidar": "^4.0.1",
+        "dayjs-nuxt": "^2.1.11",
+        "nuxt": "^3.13.2",
+        "nuxt-security": "2.0.0",
+        "vue": "^3.5.11",
+        "vue-router": "^4.4.5"
+    }
 }
