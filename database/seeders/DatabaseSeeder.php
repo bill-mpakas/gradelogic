@@ -23,17 +23,33 @@ class DatabaseSeeder extends Seeder
         $role1 = Role::create(['name' => 'admin']);
         $role2 = Role::create(['name' => 'user']);
 
+
         // create admin user
-        $user = \App\Models\User::factory()->create([
+        $user1 = \App\Models\User::factory()->create([
             'name' => 'Super',
             'email' => 'admin@admin.com',
             'password' => Hash::make('password'),
         ]);
 
-        $user->ulid = Str::ulid()->toBase32();
-        $user->email_verified_at = now();
-        $user->save(['timestamps' => false]);
+        // create a user with the role of teacher
+        $user2 = \App\Models\User::factory()->create([
+            'name' => 'Teacher',
+            'email' => 'teacher@admin.com',
+            'password' => Hash::make('password'),
+        ]);
 
-        $user->assignRole($role1);
+
+
+        $user1->ulid = Str::ulid()->toBase32();
+        $user1->email_verified_at = now();
+        $user1->save(['timestamps' => false]);
+
+        $user1->assignRole($role1);
+
+        $user2->ulid = Str::ulid()->toBase32();
+        $user2->email_verified_at = now();
+        $user2->save(['timestamps' => false]);
+
+        $user2->assignRole($role2);
     }
 }

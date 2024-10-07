@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,14 @@ Route::prefix('api/v1')->group(function () {
         Route::middleware(['throttle:uploads'])->group(function () {
             Route::post('upload', [UploadController::class, 'image'])->name('upload.image');
         });
+
+        Route::get(
+            'classrooms',
+            [ClassroomController::class, 'index']
+        )->middleware('role:admin');
     });
+
+    Route::resource('classrooms', ClassroomController::class)
+        ->only(['index', 'show'])
+        ->middleware('auth:sanctum', 'role:admin');
 });

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 useSeoMeta({
-  title: 'Account',
-})
+  title: "Account",
+});
 </script>
 <template>
   <UCard :ui="{ body: { base: 'grid grid-cols-12 gap-6 md:gap-8' } }">

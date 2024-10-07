@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ModalDemo } from '#components'
+import { ModalDemo } from "#components";
 
 const modal = useModal();
 const router = useRouter();
 const auth = useAuthStore();
 
 function openDemoModal() {
-  modal.open(ModalDemo)
+  modal.open(ModalDemo);
 }
 
 useSeoMeta({
-  title: 'Home',
-})
+  title: "Home",
+});
 </script>
 
 <template>
   <div class="grid grid-cols-12 gap-6">
     <div class="col-span-12 lg:col-span-3">
       <UCard>
-        <div class="font-bold text-lg leading-tight tracking-tighter mb-4">Demo</div>
+        <div class="font-bold text-lg leading-tight tracking-tighter mb-4">
+          Demo
+        </div>
 
         <div class="flex gap-3">
           <UButton label="Modal" @click="openDemoModal" color="gray" />
