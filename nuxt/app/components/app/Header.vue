@@ -75,7 +75,9 @@ defineShortcuts({
       <AppLogo class="lg:flex-1" />
 
       <nav class="hidden lg:flex">
-        <ul class="flex flex-col items-end lg:flex-row lg:items-center lg:gap-x-8">
+        <ul
+          class="flex flex-col items-end lg:flex-row lg:items-center lg:gap-x-8"
+        >
           <li v-for="item in navItems" class="relative">
             <NuxtLink
               class="text-sm/6 font-semibold flex items-center gap-1 hover:text-primary"
@@ -112,7 +114,13 @@ defineShortcuts({
             </div>
           </template>
         </UDropdown>
-        <UButton v-else label="Log In" to="/auth/login" variant="ghost" color="gray" />
+        <UButton
+          v-else
+          label="Log In"
+          to="/auth/login"
+          variant="ghost"
+          color="gray"
+        />
 
         <UButton
           class="lg:hidden"
@@ -140,7 +148,9 @@ defineShortcuts({
     <UContainer class="flex-1 py-4 sm:py-6">
       <UVerticalNavigation :links="navItems">
         <template #default="{ link }">
-          <span class="group-hover:text-primary relative">{{ link.label }}</span>
+          <span class="group-hover:text-primary relative">{{
+            link.label
+          }}</span>
         </template>
       </UVerticalNavigation>
     </UContainer>

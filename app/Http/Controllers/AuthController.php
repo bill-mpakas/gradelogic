@@ -18,6 +18,8 @@ use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Laravel\Socialite\Facades\Socialite;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class AuthController extends Controller
 {
@@ -30,6 +32,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'in:student,teacher'],
         ]);
 
         $user = User::create([
@@ -41,7 +44,13 @@ class AuthController extends Controller
         $user->ulid = Str::ulid()->toBase32();
         $user->save();
 
-        $user->assignRole('user');
+        //if the role from the request is student, assign the student role
+        if ($request->role === 'student') {
+            $user->assignRole('student');
+        } else {
+            //if the role from the request is teacher, assign the teacher role
+            $user->assignRole('teacher');
+        }
 
         event(new Registered($user));
 

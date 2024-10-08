@@ -33,13 +33,8 @@ Route::prefix('api/v1')->group(function () {
             Route::post('upload', [UploadController::class, 'image'])->name('upload.image');
         });
 
-        Route::get(
-            'classrooms',
-            [ClassroomController::class, 'index']
-        )->middleware('role:admin');
+        Route::resource('classrooms', ClassroomController::class)
+            ->only(['index', 'show', 'store', 'update', 'destroy'])
+            ->middleware('auth:sanctum', 'role:admin');
     });
-
-    Route::resource('classrooms', ClassroomController::class)
-        ->only(['index', 'show'])
-        ->middleware('auth:sanctum', 'role:admin');
 });

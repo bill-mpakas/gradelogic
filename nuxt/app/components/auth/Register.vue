@@ -7,34 +7,38 @@ const state = reactive({
   email: "",
   password: "",
   password_confirmation: "",
+  role: "student",
 });
 
-const { refresh: onSubmit, status: registerStatus } = useFetch<any>("register", {
-  method: "POST",
-  body: state,
-  immediate: false,
-  watch: false,
-  async onResponse({ response }) {
-    if (response?.status === 422) {
-      form.value.setErrors(response._data?.errors);
-    } else if (response._data?.ok) {
-      useToast().add({
-        icon: "i-heroicons-check-circle-20-solid",
-        title: "You have been registered successfully.",
-        color: "emerald",
-        actions: [
-          {
-            label: "Log In now",
-            to: "/auth/login",
-            color: "emerald",
-          },
-        ],
-      });
+const { refresh: onSubmit, status: registerStatus } = useFetch<any>(
+  "register",
+  {
+    method: "POST",
+    body: state,
+    immediate: false,
+    watch: false,
+    async onResponse({ response }) {
+      if (response?.status === 422) {
+        form.value.setErrors(response._data?.errors);
+      } else if (response._data?.ok) {
+        useToast().add({
+          icon: "i-heroicons-check-circle-20-solid",
+          title: "You have been registered successfully.",
+          color: "emerald",
+          actions: [
+            {
+              label: "Log In now",
+              to: "/auth/login",
+              color: "emerald",
+            },
+          ],
+        });
 
-      router.push("/auth/login");
-    }
+        router.push("/auth/login");
+      }
+    },
   }
-});
+);
 </script>
 
 <template>
@@ -72,8 +76,18 @@ const { refresh: onSubmit, status: registerStatus } = useFetch<any>("register", 
         />
       </UFormGroup>
 
+      <UFormGroup label="Role" name="role" required>
+        <div class="flex items -center space-x-2">
+          <USelect v-model="state.role" :options="['student', 'teacher']" />
+        </div>
+      </UFormGroup>
+
       <div class="flex items-center justify-end space-x-4">
-        <UButton type="submit" label="Sign Up" :loading="registerStatus === 'pending'" />
+        <UButton
+          type="submit"
+          label="Sign Up"
+          :loading="registerStatus === 'pending'"
+        />
       </div>
     </UForm>
 
