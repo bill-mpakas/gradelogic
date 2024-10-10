@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -76,5 +77,16 @@ class User extends Authenticatable implements MustVerifyEmail
         $sanctumToken->accessToken->save();
 
         return $sanctumToken->plainTextToken;
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function classrooms(): BelongsToMany
+    {
+        return $this->belongsToMany(Classroom::class)
+            ->withTimestamps()
+            ->with('roles');
+
     }
 }

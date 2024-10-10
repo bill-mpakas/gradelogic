@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 // use App\Enums\RolesEnum;
+use App\Models\Classroom;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -32,6 +34,10 @@ class DatabaseSeeder extends Seeder
         $teacherRole = app(Role::class)->findOrCreate('teacher');
         $organizationRole = app(Role::class)->findOrCreate('organization');
 
+        Classroom::factory()->count(10)->create();
+
+        User::factory()->count(10)->create();
+
 
         // create admin user
         $user1 = \App\Models\User::factory()->create([
@@ -47,7 +53,6 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-
         // create a user with the role of student
         $user3 = \App\Models\User::factory()->create([
             'name' => 'Student',
@@ -55,11 +60,17 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
+
+
+
         $user1->ulid = Str::ulid()->toBase32();
         $user1->email_verified_at = now();
         $user1->save(['timestamps' => false]);
 
         $user1->assignRole($studentRole);
+
+        // asociate the user with a classroom
+        $user1->classrooms()->attach(1);
 
         $user2->ulid = Str::ulid()->toBase32();
         $user2->email_verified_at = now();
