@@ -85,8 +85,8 @@ class User extends Authenticatable implements MustVerifyEmail
     public function classrooms(): BelongsToMany
     {
         return $this->belongsToMany(Classroom::class)
-            ->withTimestamps()
-            ->with('roles');
+            ->withTimestamps();
+
 
     }
 }

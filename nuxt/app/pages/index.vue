@@ -5,7 +5,13 @@ const modal = useModal();
 const router = useRouter();
 const auth = useAuthStore();
 
-const { data } = await useFetch('classrooms')
+const classrooms = ref([]);
+
+const fetchClassrooms = async () => {
+  const { data } = await useFetch('classrooms/1');
+  classrooms.value = data;
+};
+
 
 function openDemoModal() {
   modal.open(ModalDemo);
@@ -41,7 +47,8 @@ useSeoMeta({
         <div class="font-bold text-lg leading-tight tracking-tighter mb-4">
           Classrooms
         </div>
-        <pre>{{ data }}</pre>
+        <UButton label="Fetch Classrooms" @click="fetchClassrooms" />
+        <pre>{{ classrooms }}</pre>
       </UCard>
     </div>
   </div>

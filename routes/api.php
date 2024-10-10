@@ -4,7 +4,9 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UploadController;
+use App\Models\Classroom;
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\ValidateClassroomRequest;
 
 Route::get('/', function () {
     return ['ok' => true, 'message' => 'Welcome to the API'];
@@ -20,7 +22,17 @@ Route::prefix('api/v1')->group(function () {
     Route::post('verification-notification', [AuthController::class, 'verificationNotification'])->middleware('throttle:verification-notification')->name('verification.send');
     Route::get('verify-email/{ulid}/{hash}', [AuthController::class, 'verifyEmail'])->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
-    Route::resource('classrooms', ClassroomController::class)->only(['index', 'show'])->middleware('auth:sanctum');
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+        Route::get('classrooms', [ClassroomController::class, 'index'])->name('classrooms');
+        Route::post('classrooms', [ClassroomController::class, 'store'])->name('classrooms.store');
+        Route::get('classrooms/{classroom}', [ClassroomController::class, 'show'])
+            ->name('classrooms.show')
+            ->middleware(ValidateClassroomRequest::class);
+        Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('classrooms.update');
+        Route::delete('classrooms/{classroom}', [ClassroomController::class, 'destroy'])->name('classrooms.destroy');
+
+    });
 
     Route::middleware(['auth:sanctum'])->group(function () {
 

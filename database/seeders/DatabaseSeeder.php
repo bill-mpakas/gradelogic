@@ -72,6 +72,8 @@ class DatabaseSeeder extends Seeder
         // asociate the teacher with a classroom
         $teacher->assignRole($teacherRole);
         $teacher->classrooms()->attach($classroom1);
+        // assign to the teacher the class with the ID of 1
+        $teacher->classrooms()->attach(1);
         $teacher->ulid = Str::ulid()->toBase32();
         $teacher->email_verified_at = now();
         $teacher->save(['timestamps' => false]);
