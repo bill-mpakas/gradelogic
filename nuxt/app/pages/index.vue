@@ -5,6 +5,8 @@ const modal = useModal();
 const router = useRouter();
 const auth = useAuthStore();
 
+const { data } = await useFetch('classrooms')
+
 function openDemoModal() {
   modal.open(ModalDemo);
 }
@@ -34,6 +36,12 @@ useSeoMeta({
           User Object
         </div>
         <pre>{{ auth.user }}</pre>
+      </UCard>
+      <UCard>
+        <div class="font-bold text-lg leading-tight tracking-tighter mb-4">
+          Classrooms
+        </div>
+        <pre>{{ data }}</pre>
       </UCard>
     </div>
   </div>
