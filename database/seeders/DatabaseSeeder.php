@@ -24,58 +24,72 @@ class DatabaseSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
-        // create roles and assign existing permissions
-        // $role1 = Role::create(['name' => 'admin']);
-        // $role2 = Role::create(['name' => 'user']);
-        // $role3 = Role::create(['name' => 'teacher']);
-        // $role4 = Role::create(['name' => 'student']);
-
+        $adminRole = app(Role::class)->findOrCreate('admin');
         $studentRole = app(Role::class)->findOrCreate('student');
         $teacherRole = app(Role::class)->findOrCreate('teacher');
         $organizationRole = app(Role::class)->findOrCreate('organization');
 
         Classroom::factory()->count(10)->create();
-
         User::factory()->count(10)->create();
+
+        $classroom1 = Classroom::factory()->create();
 
 
         // create admin user
-        $user1 = \App\Models\User::factory()->create([
+        $adminUser = User::factory()->create([
             'name' => 'Super',
             'email' => 'admin@gradelogic.com',
             'password' => Hash::make('password'),
         ]);
 
         // create a user with the role of teacher
-        $user2 = \App\Models\User::factory()->create([
+        $teacher = User::factory()->create([
             'name' => 'Teacher',
             'email' => 'teacher@gradelogic.com',
             'password' => Hash::make('password'),
         ]);
 
         // create a user with the role of student
-        $user3 = \App\Models\User::factory()->create([
+        $student1 = User::factory()->create([
             'name' => 'Student',
             'email' => 'student@gradelogic.com',
             'password' => Hash::make('password'),
         ]);
 
+        // 2nd student
+        $student2 = User::factory()->create([
+            'name' => 'Student2',
+            'email' => 'student2@gradelogic.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $adminUser->ulid = Str::ulid()->toBase32();
+        $adminUser->email_verified_at = now();
+        $adminUser->save(['timestamps' => false]);
+        $adminUser->assignRole($adminRole);
 
 
+        // asociate the teacher with a classroom
+        $teacher->assignRole($teacherRole);
+        $teacher->classrooms()->attach($classroom1);
+        $teacher->ulid = Str::ulid()->toBase32();
+        $teacher->email_verified_at = now();
+        $teacher->save(['timestamps' => false]);
 
-        $user1->ulid = Str::ulid()->toBase32();
-        $user1->email_verified_at = now();
-        $user1->save(['timestamps' => false]);
+        // asociate the student1 with the same classroom
+        $student1->assignRole($studentRole);
+        $student1->classrooms()->attach($classroom1);
+        $student1->ulid = Str::ulid()->toBase32();
+        $student1->email_verified_at = now();
+        $student1->save(['timestamps' => false]);
 
-        $user1->assignRole($studentRole);
+        // asociate the student2 with another classroom
+        $student2->assignRole($studentRole);
+        $student2->classrooms()->attach(Classroom::factory()->create());
+        $student2->ulid = Str::ulid()->toBase32();
+        $student2->email_verified_at = now();
+        $student2->save(['timestamps' => false]);
 
-        // asociate the user with a classroom
-        $user1->classrooms()->attach(1);
 
-        $user2->ulid = Str::ulid()->toBase32();
-        $user2->email_verified_at = now();
-        $user2->save(['timestamps' => false]);
-
-        $user2->assignRole($teacherRole);
     }
 }
