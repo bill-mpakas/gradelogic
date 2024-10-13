@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
+        $superAdminRole = app(Role::class)->findOrCreate('Super-Admin');
         $adminRole = app(Role::class)->findOrCreate('admin');
         $studentRole = app(Role::class)->findOrCreate('student');
         $teacherRole = app(Role::class)->findOrCreate('teacher');
@@ -40,6 +41,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Super',
             'email' => 'admin@gradelogic.com',
             'password' => Hash::make('password'),
+        ]);
+
+        // create super admin user
+        $superAdmin = User::factory()->create([
+            'name' => 'Super-Admin',
+            'email' => 'superadmin@gradelogic.com',
+            'password' => bcrypt('password'),
         ]);
 
         // create a user with the role of teacher
@@ -63,10 +71,16 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
+
         $adminUser->ulid = Str::ulid()->toBase32();
         $adminUser->email_verified_at = now();
         $adminUser->save(['timestamps' => false]);
         $adminUser->assignRole($adminRole);
+
+        $superAdmin->ulid = Str::ulid()->toBase32();
+        $superAdmin->email_verified_at = now();
+        $superAdmin->save(['timestamps' => false]);
+        $superAdmin->assignRole($superAdminRole);
 
 
         // asociate the teacher with a classroom
@@ -91,6 +105,9 @@ class DatabaseSeeder extends Seeder
         $student2->ulid = Str::ulid()->toBase32();
         $student2->email_verified_at = now();
         $student2->save(['timestamps' => false]);
+
+
+
 
 
     }

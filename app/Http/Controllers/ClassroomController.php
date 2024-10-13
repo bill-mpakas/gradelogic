@@ -28,7 +28,24 @@ class ClassroomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:classrooms',
+            'description' => 'required|string',
+        ]);
+
+        $classroom = new Classroom();
+        $classroom->name = $request->name;
+        $classroom->description = $request->description;
+        // Set any other fields
+        $classroom->save();
+
+        // Attach the current user (assuming they're a teacher) to the classroom
+        $classroom->users()->attach(Auth::id());
+
+        return response()->json([
+            'message' => 'Classroom created successfully',
+            'classroom' => $classroom
+        ], 201);
     }
 
     /**

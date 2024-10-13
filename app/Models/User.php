@@ -40,6 +40,18 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
     ];
 
+
+    /**
+     * Perform pre-authorization checks on the model.
+     */
+    public function before(User $user, string $ability): ?bool
+    {
+        if ($user->hasRole('Super-Admin')) {
+            return true;
+        }
+        return null; // see the note above in Gate::before about why null must be returned here.
+    }
+
     /**
      * Get the attributes that should be cast.
      *

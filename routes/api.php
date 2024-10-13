@@ -25,7 +25,7 @@ Route::prefix('api/v1')->group(function () {
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         Route::get('classrooms', [ClassroomController::class, 'index'])->name('classrooms');
-        Route::post('classrooms', [ClassroomController::class, 'store'])->name('classrooms.store');
+        Route::post('classrooms', [ClassroomController::class, 'store'])->name('classrooms.store')->can('create', Classroom::class);
         Route::get('classrooms/{classroom}', [ClassroomController::class, 'show'])
             ->name('classrooms.show')
             ->middleware(ValidateClassroomRequest::class);
@@ -40,10 +40,8 @@ Route::prefix('api/v1')->group(function () {
         Route::post('devices/disconnect', [AuthController::class, 'deviceDisconnect'])->name('devices.disconnect');
         Route::get('devices', [AuthController::class, 'devices'])->name('devices');
         Route::get('user', [AuthController::class, 'user'])->name('user');
-
         Route::post('account/update', [AccountController::class, 'update'])->name('account.update');
         Route::post('account/password', [AccountController::class, 'password'])->name('account.password');
-
         Route::middleware(['throttle:uploads'])->group(function () {
             Route::post('upload', [UploadController::class, 'image'])->name('upload.image');
         });

@@ -33,20 +33,24 @@ class ClassroomPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        //
-        return $user->hasRole('teacher')
-            ? Response::allow()
-            : Response::deny('You are not authorized to create a classroom');
+        if($user->hasPermissionTo('create classrooms', 'api')) {
+            return Response::allow();
+        }
+        return Response::deny('You are not authorized to create a classroom', 401);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Classroom $classroom): bool
+    public function update(User $user, Classroom $classroom): Response
     {
-        //
+        // the user must be assigned to the classroom either as a teacher or student
+        if($user->can('update classrooms')  && $user->classrooms->contains($classroom)) {
+            return Response::allow();
+        }
+        return Response::deny('You are not authorized to update this classroom', 404);
     }
 
     /**

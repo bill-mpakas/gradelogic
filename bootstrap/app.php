@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Validation\ValidationException;
 
+
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         api: __DIR__.'/../routes/api.php',
@@ -18,6 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware
+            ->alias([
+                'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
+                'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
+                'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
+            ])
             ->throttleApi(redis: true)
             ->trustProxies(at: [
                 '127.0.0.1',

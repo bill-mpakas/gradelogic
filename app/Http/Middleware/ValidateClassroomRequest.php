@@ -34,7 +34,6 @@ class ValidateClassroomRequest
                 return response()->json(['message' => 'You are not authorized to view this classroom'], 404);
             }
         }
-
         return $next($request);
     }
 }
