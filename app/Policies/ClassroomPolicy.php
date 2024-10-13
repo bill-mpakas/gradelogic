@@ -47,7 +47,7 @@ class ClassroomPolicy
     public function update(User $user, Classroom $classroom): Response
     {
         // the user must be assigned to the classroom either as a teacher or student
-        if($user->can('update classrooms')  && $user->classrooms->contains($classroom)) {
+        if($user->hasPermissionTo('update-classrooms', 'api')  && $user->classrooms->contains($classroom)) {
             return Response::allow();
         }
         return Response::deny('You are not authorized to update this classroom', 404);

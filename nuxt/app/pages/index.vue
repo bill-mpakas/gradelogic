@@ -42,6 +42,7 @@ useSeoMeta({
           User Object
         </div>
         <pre>{{ auth.user }}</pre>
+        Token: {{ auth.token }}
       </UCard>
       <UCard>
         <div class="font-bold text-lg leading-tight tracking-tighter mb-4">
