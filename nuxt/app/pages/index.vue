@@ -8,7 +8,7 @@ const auth = useAuthStore();
 const classrooms = ref([]);
 
 const fetchClassrooms = async () => {
-  const { data } = await useFetch('classrooms/1');
+  const { data } = await useFetch('classrooms');
   classrooms.value = data;
 };
 

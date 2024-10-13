@@ -21,10 +21,16 @@ class ClassroomPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Classroom $classroom): Response
+    public function view(): Response
     {
-        // the user must be assigned to the classroom either as a teacher or student and
-        // must belong to the classroom's school
+        // if the authenticated user has the permission to read classrooms then they can view the classrooms
+//        if($Auth->hasPermissionTo('read classrooms', 'api')) {
+//            return Response::allow();
+//        }
+//        if($user->hasPermissionTo('read classrooms', 'api') && $user->classrooms->contains($classroom)) {
+//            return Response::allow();
+//        }
+//        return Response::deny(401);
 //        return $user->id === $classroom->user_id
 //            ? Response::allow()
 //            : Response::deny('You are not authorized to view this classroom', 404);
@@ -35,6 +41,7 @@ class ClassroomPolicy
      */
     public function create(User $user): Response
     {
+
         if($user->hasPermissionTo('create classrooms', 'api')) {
             return Response::allow();
         }

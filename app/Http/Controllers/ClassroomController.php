@@ -11,9 +11,14 @@ class ClassroomController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return Classroom::all();
+    public function index() {
+        // if the user that makes the request is a the super admin then they can view all classrooms
+        if(Auth::user()->hasRole('Super-Admin')) {
+            return response()->json(Classroom::all());
+        }
+        // if the user that makes the request is a teacher or a student then they can only view the classrooms they are assigned to
+        return response()->json(Auth::user()->classrooms);
+
     }
 
     /**
